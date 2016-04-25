@@ -11,6 +11,10 @@ npm install --save react-map-props
 
 ## Usage
 
+The `mapProps()` function accepts either an object hash containing transforms for only the properies you want, or you can provide a function that will accept all of the `props` at once and is expected to then return the desired `props`.
+
+You can apply `mapProps()` either as a decorator (if supported by your transpiler) or by just invoking it with the transforms and then calling the returned function with your Component.
+
 #### As a decorator
 
 ```js
