@@ -67,3 +67,5 @@ export default mapProps({
 ## Why?
 
 Often, components have to do some sort of consistent transformation on their props but doing it in just the `render()` method is awkward because they want to call other methods that depend on the transformed props, which means you'd need to either store it as yet another property or pass it around. This simplifies things and gives you a single place to put any of those transforms. Alternatively I've seen people do the transformations and save it as `state`, but this is awkard cause it's not really state and that requires you also handle initial props as well as `componentWillReceiveProps()`.
+
+Often, you really shouldn't need this library and should instead do transformation in `render()` and break out your children into separate components you pass the transformed state to. So if you think you need this lib, take a serious look at the complexity of your single component and see if it needs to be multiple.
