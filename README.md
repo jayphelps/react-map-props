@@ -1,17 +1,50 @@
-library-boilerplate
+react-map-props
 =========================
 
-An opinionated setup I plan to use for my libraries.
+Allows you to have a single place to transform incoming props.
 
-It has CommonJS and UMD builds via Babel and Webpack, ESLint, and Mocha.  
-It also has React-friendly examples folder with library code mapped to the sources.
+## Install
 
-If you use this, make sure to grep for “library-boilerplate” and replace every occurrence.
-See `package.json` in the root and the example folder for the list of the available commands.
+```bash
+npm install --save react-map-props
+```
 
-Note that this is an *opinionated* boilerplate. You might want to:
+## Usage
 
-* Set `stage` to `2` in `.babelrc` so you don’t depend on language features that might be gone tomorrow;
-* Remove `loose: ["all"]` from `.babelrc` so the behavior is spec-compliant.
+#### As a decorator
 
-You have been warned.
+```js
+import React, { Component } from 'react';
+import { mapProps } from 'react-map-props';
+
+@mapProps({
+  message: value => value + ' world'
+})
+export default
+class Example1 extends Component {
+  render() {
+    // <div>hello world</div>
+    return <div>{this.props.message}</div>;
+  } 
+}
+```
+
+#### As a function
+
+```js
+import React, { Component } from 'react';
+import { mapProps } from 'react-map-props';
+
+const Example = (props) => (
+  // <div>hello world</div>
+  <div>{props.message}</div>
+);
+
+export default mapProps({
+  message: value => value + ' world'
+})(Example);
+```
+
+## Why?
+
+Often, components have to do some sort of consistent transformation on their props but doing it in just the `render()` method is awkward because they want to call other methods that depend on the transformed props, which means you'd need to either store it as yet another property or pass it around. This simplifies things and gives you a single place to put any of those transforms. Alternatively I've seen people do the transformations and save it as `state`, but this is awkard cause it's not really state and that requires you also handle initial props as well as `componentWillReceiveProps()`.

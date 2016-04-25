@@ -1,7 +1,7 @@
 {
   "name": "react-map-props",
   "version": "0.1.0",
-  "description": "Transform your component props",
+  "description": "Transform component props before they're passed to your component",
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf lib dist",
