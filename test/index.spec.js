@@ -40,6 +40,16 @@ describe('provideQueryParams', () => {
     expect(result.props.foo).toEqual({bar: 2})
   });
   
+  it('is noop when map is a deep hash and lacks the referenced key', () => {
+    const renderer = new ShallowRenderer();
+    renderer.render(<DeepMappedComponent quux={{bar: '1'}} />);
+    const result = renderer.getRenderOutput();
+
+    expect(result.type).toBe(MyComponent);
+    expect(result.props.foo).toBe(undefined)
+    expect(result.props.quux).toEqual({bar: '1'})
+  });
+  
   it('changes prop when map is a function', () => {
     const renderer = new ShallowRenderer();
     renderer.render(<FnMappedComponent bar='1' />);
