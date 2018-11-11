@@ -7,7 +7,7 @@ const applyTransform = (transform, props) => {
     const nextProps = {...props };
 
     for (const key in transform) {
-      nextProps[key] = transform[key](props[key]);
+      nextProps[key] = applyTransform(transform[key], props[key])
     }
 
     return nextProps;

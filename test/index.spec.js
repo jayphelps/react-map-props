@@ -9,6 +9,7 @@ function MyComponent(props) {
 
 const NullMappedComponent = mapProps({})(MyComponent)
 const MappedComponent = mapProps({foo: value => value*2})(MyComponent)
+const DeepMappedComponent = mapProps({foo: {bar: value => value*2}})(MyComponent)
 const FnMappedComponent = mapProps(value => ({foo: value}))(MyComponent)
 
 describe('provideQueryParams', () => {
@@ -28,6 +29,15 @@ describe('provideQueryParams', () => {
 
     expect(result.type).toBe(MyComponent);
     expect(result.props.foo).toEqual(2)
+  });
+  
+  it('changes prop when map is a deep hash', () => {
+    const renderer = new ShallowRenderer();
+    renderer.render(<DeepMappedComponent foo={{bar: '1'}} />);
+    const result = renderer.getRenderOutput();
+
+    expect(result.type).toBe(MyComponent);
+    expect(result.props.foo).toEqual({bar: 2})
   });
   
   it('changes prop when map is a function', () => {
