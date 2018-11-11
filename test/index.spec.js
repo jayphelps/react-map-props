@@ -8,7 +8,8 @@ function MyComponent(props) {
 }
 
 const NullMappedComponent = mapProps({})(MyComponent)
-const MappedComponent = mapProps({foo: value => 4})(MyComponent)
+const MappedComponent = mapProps({foo: value => value*2})(MyComponent)
+const FnMappedComponent = mapProps(value => ({foo: value}))(MyComponent)
 
 describe('provideQueryParams', () => {
   it('does not change prop when map is empty', () => {
@@ -26,6 +27,15 @@ describe('provideQueryParams', () => {
     const result = renderer.getRenderOutput();
 
     expect(result.type).toBe(MyComponent);
-    expect(result.props.foo).toEqual(4)
+    expect(result.props.foo).toEqual(2)
+  });
+  
+  it('changes prop when map is a function', () => {
+    const renderer = new ShallowRenderer();
+    renderer.render(<FnMappedComponent bar='1' />);
+    const result = renderer.getRenderOutput();
+
+    expect(result.type).toBe(MyComponent);
+    expect(result.props.foo).toEqual({bar: '1'})
   });
 });
