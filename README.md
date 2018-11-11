@@ -11,11 +11,22 @@ npm install --save react-map-props
 
 ## Usage
 
-The `mapProps()` function accepts either an object hash containing transforms for only the properies you want, or you can provide a function that will accept all of the `props` at once and is expected to then return the desired `props`.
+The `mapProps()` function accepts either an object hash containing transforms
+for only the properies you want, or you can provide a function that will
+accept all of the `props` at once and is expected to then return the desired `props`.
 
 ```js
 @mapProps({
   message: value => value + ' world'
+})
+
+// or recursively
+
+```js
+@mapProps({
+  message: {
+    key: value => value + ' world'
+  },
 })
 
 // or
